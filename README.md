@@ -1,7 +1,18 @@
 # API-prova-tray
 Repositorio da API desenvolvido para a prova da Tray
 
-Depois de baixar o código fonte é necessário executar o <b>composer install</b> após isso, crie uma base de dados com o nome <b>prova-tray</b>
+Depois de baixar o código fonte é necessário executar o <b>composer install</b> após isso, configure o arquivo <b>.env</b> com os dados:
+
+DB_CONNECTION=pgsql<br>
+DB_HOST=localhost<br>
+DB_PORT=5432<br>
+DB_DATABASE=prova-tray<br>
+DB_USERNAME=user_name<br>
+DB_PASSWORD=password<br>
+
+* Banco de dados é o PostgreSQL
+
+Crie uma base de dados com o nome <b>prova-tray</b>
 execute o comando <b>php artisan migrate</b> que iŕa gerar toda a base de dados.
 
 #Scheduler de envio do Email
