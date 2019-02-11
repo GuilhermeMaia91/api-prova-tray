@@ -1,238 +1,64 @@
 openapi: 3.0.0
 info:
-  title: 'API de emissão e consulta de documentos fiscais'
-  description: 'Essa API gera documentos como NFe, CTe e outros na SEFAZ, podendo também realizar a leitura de emails com XML de notas fiscais e realiza o download.'
+  title: 'API da prova tray'
+  description: 'Essa API cadastra vendedores e vendas.'
   contact:
-    email: contato@agilisweb.com
+    email: guilhermemaiasilva@hotmail.com
   version: 1.0.0
 paths:
-  /empresas:
+  /vendedor/lista:
     get:
       tags:
-        - Empresas
-      summary: 'Obtém todas as empresas'
-      operationId: 'App\Http\Controllers\EmpresasController::index'
+        - Vendedor
+      summary: 'Obtém todas os vendedores'
+      operationId: 'App\Http\Controllers\UsuariosController::index'
       responses:
         '200':
-          description: 'Retorna uma lista de todas as empresas'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Empresa'
-        '401':
-          description: 'É necessário realizar o login para ter acesso ao método'
-    put:
-      tags:
-        - Empresas
-      summary: 'Atualização do cadastro da empresa'
-      description: 'Atualiza o cadastro de uma empresa'
-      operationId: updateEmpresa
-      requestBody:
-        description: 'Dados da empresa que deve ser armazenado.'
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Empresa'
-      responses:
-        '200':
-          description: 'Objeto com os dados da empresa'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empresa'
-        '401':
-          description: 'É necessário realizar o login para ter acesso ao método'
-        '404':
-          description: 'Nenhuma rota encontrada'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          description: 'Retorna uma lista de vendedores'
+        '500':
+          description: 'Erro interno da API, consulte o log'
+  /vendedor/incluir:
     post:
       tags:
-        - Empresas
-      summary: 'Insere uma nova empresa'
-      description: 'Gera o cadastro de uma nova empresa'
-      operationId: addEmpresa
+        - Vendedor
+      summary: 'Insere um novo vendedor'
+      description: 'Inclui um novo vendedor'
+      operationId: addNovoVendedor
       requestBody:
-        description: 'Dados da empresa que deve ser armazenado.'
+        description: 'Dados do vendedor que deve ser armazenado.'
         required: true
         content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Empresa'
+          multipart/form-data: {  }
       responses:
         '200':
-          description: 'Objeto com os dados da empresa'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empresa'
-        '401':
-          description: 'É necessário realizar o login para ter acesso ao método'
-        '404':
-          description: 'Nenhuma rota encontrada'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  '/empresas/{empresaId}':
+          description: 'Objeto com os dados do vendedor'
+        '500':
+          description: 'Erro interno da API, consulte o log'
+  /venda/lista:
     get:
       tags:
-        - Empresas
-      summary: 'Obtém os dados da empresa correspondente ao código'
-      operationId: 'App\Http\Controllers\EmpresasController::show'
-      parameters:
-        -
-          name: empresaId
-          in: path
-          description: 'Código identificador da empresa'
-          required: true
-          schema:
-            type: integer
-            format: int64
+        - Vendas
+      summary: 'Obtém todas as vendas'
+      operationId: 'App\Http\Controllers\VendasController::index'
+      responses:
+        '200':
+          description: 'Retorna uma lista de todas as vendas'
+        '500':
+          description: 'Erro interno da API, consulte o log'
+  /venda/incluir:
+    post:
+      tags:
+        - Venda
+      summary: 'Insere uma nova venda'
+      description: 'Inclui uma nova venda'
+      operationId: addNovaVenda
+      requestBody:
+        description: 'Dados da venda que deve ser armazenado.'
+        required: true
+        content:
+          multipart/form-data: {  }
       responses:
         '200':
           description: 'Objeto com os dados da empresa'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empresa'
-        '401':
-          description: 'É necessário realizar o login para ter acesso ao método'
-        '404':
-          description: 'Nenhuma rota encontrada'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      tags:
-        - Empresas
-      summary: 'Remove uma empresa através do código'
-      description: 'Deleta uma empresa da base de dados através do código'
-      operationId: deleteEmpresa
-      parameters:
-        -
-          name: empresaId
-          in: path
-          description: 'Código da empresa a ser excluída'
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: 'Objeto com os dados da empresa excluída'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empresa'
-        '401':
-          description: 'É necessário realizar o login para ter acesso ao método'
-        '404':
-          description: 'Nenhuma rota encontrada'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-components:
-  schemas:
-    Empresa:
-      required:
-        - emp_grupo_empresarial
-        - emp_razao
-        - emp_cnpj
-        - emp_certificado
-        - emp_certificado_pass
-        - emp_versao_nfe
-        - emp_schema_nfe
-        - emp_crt_nfe
-        - emp_status
-      properties:
-        id:
-          type: integer
-          format: int64
-        emp_grupo_empresarial:
-          type: integer
-          format: int64
-        emp_razao:
-          type: string
-          format: string
-        emp_fantasia:
-          type: string
-          format: string
-        emp_cnpj:
-          type: string
-          format: string
-        emp_responsavel:
-          type: string
-          format: string
-        emp_responsavel_email:
-          type: string
-          format: string
-        emp_telefone:
-          type: string
-          format: string
-        emp_cidade:
-          type: string
-          format: string
-        emp_estado:
-          type: string
-          format: string
-        emp_certificado:
-          type: string
-          format: string
-        emp_certificado_pass:
-          type: string
-          format: string
-        emp_manifesto:
-          type: boolean
-          format: boolean
-        emp_download_email:
-          type: boolean
-          format: boolean
-        emp_download_sefaz:
-          type: boolean
-          format: boolean
-        emp_download_sefaz_nsu:
-          type: boolean
-          format: boolean
-        emp_ambiente_nfe:
-          type: string
-          format: string
-        emp_versao_nfe:
-          type: string
-          format: string
-        emp_schema_nfe:
-          type: string
-          format: string
-        emp_crt_nfe:
-          type: integer
-          format: int64
-        emp_status:
-          type: boolean
-          format: boolean
-      type: object
-      xml:
-        name: Empresa
-    Error:
-      properties:
-        code:
-          description: 'Código de response 400,401,404...etc'
-          type: string
-          format: string
-        message:
-          description: 'Mensagem de reposta'
-          type: string
-          format: string
-        data:
-          description: 'Informação de envio'
-          type: string
-          format: string
-      type: object
-      xml:
-        name: Error
+        '500':
+          description: 'Erro interno, consulte o log'

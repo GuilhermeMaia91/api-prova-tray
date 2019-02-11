@@ -15,11 +15,7 @@ class UsuariosController extends Controller
      *   summary="Obtém todas os vendedores",
      *   @OA\Response(
      *     response=200,
-     *     description="Retorna uma lista de vendedores",
-     *     @OA\JsonContent(
-     *         type="array",
-     *         @OA\Items(ref="#/components/schemas/User")
-     *     ),
+     *     description="Retorna uma lista de vendedores"
      *   ),
      *   @OA\Response(
      *     response="500",
@@ -59,14 +55,12 @@ class UsuariosController extends Controller
      *         description="Dados do vendedor que deve ser armazenado.",
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/User")
+     *             mediaType="multipart/form-data"
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Objeto com os dados do vendedor",
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         description="Objeto com os dados do vendedor"
      *     ),
      *     @OA\Response(
      *         response="500",

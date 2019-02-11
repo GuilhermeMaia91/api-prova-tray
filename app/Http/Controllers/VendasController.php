@@ -16,10 +16,6 @@ class VendasController extends Controller
      *   @OA\Response(
      *     response=200,
      *     description="Retorna uma lista de todas as vendas",
-     *     @OA\JsonContent(
-     *         type="array",
-     *         @OA\Items(ref="#/components/schemas/Order")
-     *     ),
      *   ),
      *   @OA\Response(
      *     response="500",
@@ -63,14 +59,12 @@ class VendasController extends Controller
      *         description="Dados da venda que deve ser armazenado.",
      *         required=true,
      *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *             @OA\Schema(ref="#/components/schemas/Order")
+     *             mediaType="multipart/form-data"
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Objeto com os dados da empresa",
-     *         @OA\JsonContent(ref="#/components/schemas/Order")
+     *         description="Objeto com os dados da empresa"
      *     ),
      *     @OA\Response(
      *         response="500",

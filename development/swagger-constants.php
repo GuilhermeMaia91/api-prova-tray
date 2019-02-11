@@ -1,2 +1,2 @@
 <?php
-    define("API_HOST", 'http://agilisweb-apinfe.local/');
+    define("API_HOST", 'http://localhost:8000/');
